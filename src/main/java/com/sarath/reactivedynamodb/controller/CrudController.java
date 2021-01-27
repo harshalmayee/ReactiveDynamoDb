@@ -4,9 +4,11 @@ import com.sarath.reactivedynamodb.domain.Address;
 import com.sarath.reactivedynamodb.domain.Customer;
 import com.sarath.reactivedynamodb.service.CustomerService;
 import com.sarath.reactivedynamodb.util.Result;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import software.amazon.awssdk.core.async.SdkPublisher;
 
 @RestController
 public class CrudController {
@@ -47,10 +49,22 @@ public class CrudController {
         return customerService.queryAddressByCustomerId(customerId);
     }
 
-    @GetMapping("/allCustomerList")
+
+    // Backpressure
+    @GetMapping(value = "/allCustomerListBackPressure",produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
+    public Flux<Customer> getAllCustomerBackPressure() {
+        return customerService.getCustomerListBackpressure();
+    }
+
+   // Without Backpressure
+    @GetMapping(value = "/allCustomerList",produces = MediaType.APPLICATION_STREAM_JSON_VALUE)
     public Flux<Customer> getAllCustomer() {
         return customerService.getCustomerList();
     }
+
+
+
+
 
     //batchGetItem
 

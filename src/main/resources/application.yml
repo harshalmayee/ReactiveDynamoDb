@@ -1,0 +1,6 @@
+aws:
+    accessKey: AKIAY34LQAR6UNBR5SHA
+    secretKey: 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
+    dynamodb:
+        endpoint: http://dynamodb.us-east-1.amazonaws.com
+
